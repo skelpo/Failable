@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>LengthValidation Protocol Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Protocol/LengthValidation" class="dashAnchor"></a>
+    <a title="LengthValidation Protocol Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html"> Docs</a> (98% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html"> Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        LengthValidation Protocol Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/CustomStringConvertible.html">CustomStringConvertible</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Functions.html">Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:10Validation2ltoiyyAA8FailableVyxq_Gz_xtK9SupportedQy_RszA2AR_r0_lF">&lt;~(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:10Validation2eeoiySbAA8FailableVyxq_G_ADyxq0_GtSQRz9SupportedQy_RszA2AR_A2AR0_AGQy0_AHRSr1_lF">==(_:_:)</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/AnyValidation.html">AnyValidation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ElementValidation.html">ElementValidation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/InRangeValidation.html">InRangeValidation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/LengthValidation.html">LengthValidation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RegexValidation.html">RegexValidation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Validation.html">Validation</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/Failable.html">Failable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/NotNil.html">NotNil</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/NotNilValidate.html">NotNilValidate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ValidationError.html">ValidationError</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>LengthValidation</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">LengthValidation</span><span class="p">:</span> <span class="kt"><a href="../Protocols/Validation.html">Validation</a></span> <span class="k">where</span> <span class="kt">Supported</span><span class="p">:</span> <span class="kt">Collection</span></code></pre>
+
+                </div>
+              </div>
+            <p>A validation type that verifies the length of a type conforming to <code>Collection</code>.</p>
+<pre class="highlight swift"><code><span class="kd">internal</span> <span class="kd">struct</span> <span class="kt">LengthRange10To1028</span><span class="o">&lt;</span><span class="kt">C</span><span class="o">&gt;</span><span class="p">:</span> <span class="kt">LengthValidation</span> <span class="k">where</span> <span class="kt">C</span><span class="p">:</span> <span class="kt">Collection</span> <span class="p">{</span>
+    <span class="kd">typealias</span> <span class="kt">Supported</span> <span class="o">=</span> <span class="kt">C</span>
+
+    <span class="kd">static</span> <span class="k">var</span> <span class="nv">maxLength</span><span class="p">:</span> <span class="kt">Int</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">1028</span> <span class="p">}</span>
+    <span class="kd">static</span> <span class="k">var</span> <span class="nv">minLength</span><span class="p">:</span> <span class="kt">Int</span> <span class="p">{</span> <span class="k">return</span>  <span class="mi">10</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>If the value passed into the <code>validate</code> method has a length the is greater than <code>maxLength</code>, <code>ValidationError.lengthTooLong</code> is thrown.
+If the value has a length less than <code>minLength</code>, <code>ValidationError.lengthTooShort</code> is thrown.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10Validation06LengthA0P03maxB0SivpZ"></a>
+                    <a name="//apple_ref/swift/Variable/maxLength" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10Validation06LengthA0P03maxB0SivpZ">maxLength</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The maximum length that the validated collection can have.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">var</span> <span class="nv">maxLength</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10Validation06LengthA0P03minB0SivpZ"></a>
+                    <a name="//apple_ref/swift/Variable/minLength" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10Validation06LengthA0P03minB0SivpZ">minLength</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The minimum length that the validated collection can have.</p>
+
+<p>This value defaults to <code>0</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">var</span> <span class="nv">minLength</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2018-11-28)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

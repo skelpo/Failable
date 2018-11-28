@@ -1,0 +1,12 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/calebkleveter/Development/Skelpo/Validation/Sources/Validation/Failable+Helpers/Failable+Comparable.swift",
+      "line": 7,
+      "symbol": "==(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.free",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/calebkleveter/Development/Skelpo/Validation"
+}

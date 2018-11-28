@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Failable Structure Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Struct/Failable" class="dashAnchor"></a>
+    <a title="Failable Structure Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html"> Docs</a> (98% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html"> Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        Failable Structure Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/CustomStringConvertible.html">CustomStringConvertible</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Functions.html">Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:10Validation2ltoiyyAA8FailableVyxq_Gz_xtK9SupportedQy_RszA2AR_r0_lF">&lt;~(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:10Validation2eeoiySbAA8FailableVyxq_G_ADyxq0_GtSQRz9SupportedQy_RszA2AR_A2AR0_AGQy0_AHRSr1_lF">==(_:_:)</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/AnyValidation.html">AnyValidation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ElementValidation.html">ElementValidation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/InRangeValidation.html">InRangeValidation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/LengthValidation.html">LengthValidation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RegexValidation.html">RegexValidation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Validation.html">Validation</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/Failable.html">Failable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/NotNil.html">NotNil</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/NotNilValidate.html">NotNilValidate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ValidationError.html">ValidationError</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Failable</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Failable</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">,</span> <span class="kt">Validations</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">Validations</span><span class="p">:</span> <span class="kt"><a href="../Protocols/Validation.html">Validation</a></span><span class="p">,</span> <span class="kt">Validations</span><span class="o">.</span><span class="kt">Supported</span> <span class="o">==</span> <span class="kt">T</span></code></pre>
+
+                </div>
+              </div>
+            <p>A type that can fail when being set because the new value does pass certain validations.</p>
+
+<p>You can create a <code>Failable</code> instance in 2 ways. The first is to use the <code>Failable</code> initializer:</p>
+<pre class="highlight swift"><code><span class="k">try</span> <span class="kt">Failable</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kt">Length1028</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"the quick brown fox..."</span><span class="p">)</span>
+</code></pre>
+
+<p>Or you can call <code>.failable</code> on any intance of a type conforming to <code>CustomStringConvertible</code>:</p>
+<pre class="highlight swift"><code><span class="k">try</span> <span class="s">"the quick brown fox..."</span><span class="o">.</span><span class="nf">failable</span><span class="p">(</span><span class="kt">Length1028</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+</code></pre>
+
+<p>A <code>Failable</code> type is a struct, so the stored value can only be mutated if the <code>Failable</code> instance is a variable.
+The stored value does not make its setter public, because then you would be able to set the value directly and bypass the validations.
+Instead you use the <code>&lt;~</code> operator to assign a new value:</p>
+<pre class="highlight swift"><code><span class="k">var</span> <span class="nv">story</span> <span class="o">=</span> <span class="k">try</span> <span class="s">"the quick brown fox..."</span><span class="o">.</span><span class="nf">failable</span><span class="p">(</span><span class="kt">Length1028</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+<span class="k">try</span> <span class="n">story</span> <span class="o">&lt;~</span> <span class="s">"Long long ago, on a pencil far far away..."</span>
+</code></pre>
+
+<p>Use the <code>.value</code> property to access the actual value:</p>
+<pre class="highlight swift"><code><span class="k">var</span> <span class="nv">story</span> <span class="o">=</span> <span class="k">try</span> <span class="s">"the quick brown fox..."</span><span class="o">.</span><span class="nf">failable</span><span class="p">(</span><span class="kt">Length1028</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">story</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+</code></pre>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10Validation8FailableV5valuexvp"></a>
+                    <a name="//apple_ref/swift/Property/value" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10Validation8FailableV5valuexvp">value</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The underlaying value that has been validated.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    The setter for this property is not public.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">T</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10Validation8FailableVyACyxq_GxKcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10Validation8FailableVyACyxq_GxKcfc">init(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates a new <code>Failable</code> instance.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">t</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span><span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>t</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The orginal value for the instance.
+This value will be validated and the initializer will fail if it doesn&rsquo;t pass.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10Validation8FailableVAASERzrlE6encode2toys7Encoder_p_tKF"></a>
+                    <a name="//apple_ref/swift/Method/encode(to:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10Validation8FailableVAASERzrlE6encode2toys7Encoder_p_tKF">encode(to:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>See <a href="https://developer.apple.com/documentation/swift/encodable/2893603-encode"><code>Encodable.encode(to:)</code></a></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">encode</span><span class="p">(</span><span class="n">to</span> <span class="nv">encoder</span><span class="p">:</span> <span class="kt">Encoder</span><span class="p">)</span><span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10Validation8FailableVAASeRzrlE4fromACyxq_Gs7Decoder_p_tKcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(from:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10Validation8FailableVAASeRzrlE4fromACyxq_Gs7Decoder_p_tKcfc">init(from:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>See <a href="https://developer.apple.com/documentation/swift/decodable/2894081-init"><code>Decodable.init(from:)</code></a></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">from</span> <span class="nv">decoder</span><span class="p">:</span> <span class="kt">Decoder</span><span class="p">)</span><span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SQ2eeoiySbx_xtFZ"></a>
+                    <a name="//apple_ref/swift/Method/==(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SQ2eeoiySbx_xtFZ">==(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">Failable</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">,</span> <span class="kt">Validations</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">Failable</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">,</span> <span class="kt">Validations</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SH4hash4intoys6HasherVz_tF"></a>
+                    <a name="//apple_ref/swift/Method/hash(into:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SH4hash4intoys6HasherVz_tF">hash(into:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">hash</span><span class="p">(</span><span class="n">into</span> <span class="nv">hasher</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Hasher</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2018-11-28)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
