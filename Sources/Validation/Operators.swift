@@ -12,7 +12,6 @@ infix operator <~
 ///   - root: The `Failable` instance that holds the value to be mutated.
 ///   - value: The new value for the `root.value` property.
 public func <~ <T, Validations>(root: inout Failable<T, Validations>, value: T)throws {
-    try Validations.validate(value)
-    try Validations.safeSubvalidations.forEach { validation in try validation.validate(value) }
+    try root.validate(value)
     root.value = value
 }
