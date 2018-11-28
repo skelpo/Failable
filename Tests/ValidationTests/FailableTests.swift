@@ -42,7 +42,3 @@ final class FailableTests: XCTestCase {
         ("testDecode", testDecode)
     ]
 }
-
-internal struct EmptyValidation<T>: Validation {
-    typealias Supported = T
-}
