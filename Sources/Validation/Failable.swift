@@ -8,6 +8,8 @@
 ///
 ///     try "the quick brown fox...".failable(Length1028.self)
 ///
+/// ## Mutation
+///
 /// A `Failable` type is a struct, so the stored value can only be mutated if the `Failable` instance is a variable.
 /// The stored value does not make its setter public, because then you would be able to set the value directly and bypass the validations.
 /// Instead you use the `<~` operator to assign a new value:
@@ -19,6 +21,18 @@
 ///
 ///     var story = try "the quick brown fox...".failable(Length1028.self)
 ///     print(story.value)
+///
+/// ## Literal Initialization
+///
+/// `Failable` supprts initialization with certain type literals if the `value` type `T` also supports it.
+/// Initialization is supported for `Int`, `Float`, `Bool`, `nil`, and `String` types.
+///
+///     let string = Failable<String, EmptyValidationM<String>> = "Hello world"
+///
+/// - Warning: Because literal initializers cannot fail, your program will crash if the value passed in does not pass validation.
+///
+/// `Dictionary` and `Array` types are not supported for literal initialization yet because array
+/// splatting for variadic parameters is not supported yet.
 public struct Failable<T, Validations> where Validations: Validation, Validations.Supported == T {
     
     /// The underlaying value that has been validated.
