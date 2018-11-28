@@ -1,5 +1,5 @@
 /// An error that occurs while validating a value.
-public struct ValidationError: Error {
+public struct ValidationError: Codable, Error {
     
     /// The machine readable ID for the error.
     public let identifier: String
