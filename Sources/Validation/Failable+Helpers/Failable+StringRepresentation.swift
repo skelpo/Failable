@@ -20,3 +20,11 @@ extension Failable: LosslessStringConvertible where T: LosslessStringConvertible
         }
     }
 }
+
+extension Failable: CustomDebugStringConvertible where T: CustomDebugStringConvertible {
+    
+    /// See [`CustomDebugStringConvertible.debugDescription`](https://developer.apple.com/documentation/swift/customdebugstringconvertible/1540125-debugdescription).
+    public var debugDescription: String {
+        return "Failable(value: " + self.value.debugDescription + ", validations: " + String(describing: Validations.self) + ")"
+    }
+}
