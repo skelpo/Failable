@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>NotNil Structure Reference</title>
+    <title>ElementValidation Structure Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Struct/NotNil" class="dashAnchor"></a>
-    <a title="NotNil Structure Reference"></a>
+    <a name="//apple_ref/swift/Struct/ElementValidation" class="dashAnchor"></a>
+    <a title="ElementValidation Structure Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html"> Docs</a> (100% documented)</p>
@@ -21,7 +21,7 @@
       <p id="breadcrumbs">
         <a href="../index.html"> Reference</a>
         <img id="carat" src="../img/carat.png" />
-        NotNil Structure Reference
+        ElementValidation Structure Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -145,16 +145,16 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>NotNil</h1>
+            <h1>ElementValidation</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">NotNil</span><span class="o">&lt;</span><span class="kt">Wrapped</span><span class="o">&gt;</span><span class="p">:</span> <span class="kt"><a href="../Protocols/Validation.html">Validation</a></span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">ElementValidation</span><span class="o">&lt;</span><span class="kt">Seq</span><span class="p">,</span> <span class="kt">Validator</span><span class="o">&gt;</span><span class="p">:</span> <span class="kt"><a href="../Protocols/Validation.html">Validation</a></span> <span class="k">where</span> <span class="kt">Seq</span><span class="p">:</span> <span class="kt">Sequence</span><span class="p">,</span> <span class="kt">Validator</span><span class="p">:</span> <span class="kt"><a href="../Protocols/Validation.html">Validation</a></span><span class="p">,</span> <span class="kt">Validator</span><span class="o">.</span><span class="kt">Supported</span> <span class="o">==</span> <span class="kt">Seq</span><span class="o">.</span><span class="kt">Element</span></code></pre>
 
                 </div>
               </div>
-            <p>Verified that a value is not equal to <code>nil</code>.</p>
+            <p>Validates each element in a sequence using another validator.</p>
 
-<p>If the value passed in to be validated <em>is</em> <code>nil</code>, <code>ValidationError.valueIsNil</code> is thrown.</p>
+<p>The <code>validate</code> method calls <code>.forEach</code> on the value passed in and passes the <code>Validator.run</code> method in as the closure.</p>
 
           </section>
           <section class="section task-group-section">
@@ -163,9 +163,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10Validation6NotNilV8validateyyxSgKFZ"></a>
-                    <a name="//apple_ref/swift/Method/validate(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10Validation6NotNilV8validateyyxSgKFZ">validate(_:)</a>
+                    <a name="/s:10ValidationAAP9SupportedQa"></a>
+                    <a name="//apple_ref/swift/Alias/Supported" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ValidationAAP9SupportedQa">Supported</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -173,14 +173,39 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>See <code><a href="../Protocols/Validation.html#/s:10ValidationAAP8validateyy9SupportedQzKFZ">Validation.validate(_:)</a></code>.</p>
-
+                        
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">validate</span><span class="p">(</span><span class="n">_</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">Optional</span><span class="o">&lt;</span><span class="kt">Wrapped</span><span class="o">&gt;</span><span class="p">)</span><span class="k">throws</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">typealias</span> <span class="kt">Supported</span> <span class="o">=</span> <span class="kt">Seq</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10ValidationAAP8validateyy9SupportedQzKFZ"></a>
+                    <a name="//apple_ref/swift/Method/validate(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ValidationAAP8validateyy9SupportedQzKFZ">validate(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">validate</span><span class="p">(</span><span class="n">_</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">Seq</span><span class="p">)</span><span class="k">throws</span></code></pre>
 
                         </div>
                       </div>
