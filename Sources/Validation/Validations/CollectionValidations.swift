@@ -31,3 +31,27 @@ extension LengthValidation {
         }
     }
 }
+
+
+/// Validates each element in a sequence using a custom validation function.
+///
+///     struct StringLengthArray: ElementValidation {
+///         static var validator: (String)throws -> Void = { str in
+///             guard str.count <= 1028 else { throw ValidationError(identifier: "lengthToLong", reason: "String must have length 1028 or less") }
+///         }
+///     }
+///
+/// The `validate` method calls `.forEach` on the value passed in and passes the `validator` function in as the closure.
+public protocol ElementValidation: Validation where Supported: Sequence {
+    
+    /// The function used to validate each element in the sequence.
+    static var validator: (Supported.Element)throws -> Void { get }
+}
+
+extension ElementValidation {
+    
+    /// See `Validation.validate(_:)`.
+    static func validate(_ value: Supported)throws {
+        return try value.forEach(self.validator)
+    }
+}
