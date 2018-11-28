@@ -8,13 +8,12 @@ internal struct LengthRange10To1028<C>: LengthValidation where C: Collection {
     static var minLength: Int { return  10 }
 }
 
-internal struct StringLengthArray: ElementValidation {
-    typealias Supported = [String]
+internal struct Length1028<C>: LengthValidation where C: Collection {
+    typealias Supported = C
     
-    static var validator: (String)throws -> Void = { str in
-        guard str.count <= 1028 else { throw ValidationError(identifier: "lengthToLong", reason: "String must have length 1028 or less") }
-    }
+    static var maxLength: Int { return 1028 }
 }
+internal typealias StringLengthArray = ElementValidation<[String], Length1028<String>>
 
 final class CollectionTests: XCTestCase {
     func testLengthValidation()throws {

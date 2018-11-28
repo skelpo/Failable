@@ -7,7 +7,7 @@ internal struct USPhoneNumber: RegexValidation {
 
 final class StringTests: XCTestCase {
     func testUSPhoneNumber()throws {
-        var number = try Failable<String, USPhoneNumber>("731-943-4316")
+        var number: Failable<String, USPhoneNumber> = try "731-943-4316".failable()
         
         try number <~ "(731)-943-4316"
         try number <~ "1-731-943-4316"
