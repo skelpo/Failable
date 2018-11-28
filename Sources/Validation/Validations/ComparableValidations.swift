@@ -1,8 +1,8 @@
 /// A validation for checking that a value is greater or equal to a lesser value and less than or equal to a greater value.
 ///
 ///     struct NumberThousand: InRangeValidation {
-///         static let max = 9_999
-///         static let min = 1_000
+///         static let max: Int? = 9_999
+///         static let min: Int? = 1_000
 ///     }
 ///
 /// If the value being validated is greater than the `max` value, `ValidationError.valueTooGreat` is throw.

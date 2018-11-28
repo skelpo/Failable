@@ -1,8 +1,10 @@
 /// A validation type that verifies the length of a type conforming to `Collection`.
 ///
-///     struct LengthRange10To1028: LengthValidation {
-///         static let maxLength: Int = 1028
-///         static let minLength: Int = 10
+///     internal struct LengthRange10To1028<C>: LengthValidation where C: Collection {
+///         typealias Supported = C
+///
+///         static var maxLength: Int { return 1028 }
+///         static var minLength: Int { return  10 }
 ///     }
 ///
 /// If the value passed into the `validate` method has a length the is greater than `maxLength`, `ValidationError.lengthTooLong` is thrown.

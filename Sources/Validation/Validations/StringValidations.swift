@@ -3,6 +3,8 @@ import Foundation
 /// Checks that a `String` value contains a match to a regular expression pattern somewhere in it.
 ///
 ///     struct USPhoneNumber: RegexValidation {
+///         typealias Supported = String
+///
 ///         static let pattern = "1?-?\\(?[0-9]{3}\\)?-?[0-9]{3}-?[0-9]{4}"
 ///     }
 ///
