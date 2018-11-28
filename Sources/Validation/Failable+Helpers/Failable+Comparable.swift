@@ -14,3 +14,11 @@ extension Failable: Equatable where T: Equatable {
 public func == <T, V1, V2>(lhs: Failable<T, V1>, rhs: Failable<T, V2>) -> Bool where T: Equatable {
     return lhs.value == rhs.value
 }
+
+extension Failable: Comparable where T: Comparable {
+    
+    /// See [`Comparable.<(_:_:)`](https://developer.apple.com/documentation/swift/comparable/1538311)
+    public static func < (lhs: Failable<T, Validations>, rhs: Failable<T, Validations>) -> Bool {
+        return lhs.value < rhs.value
+    }
+}
