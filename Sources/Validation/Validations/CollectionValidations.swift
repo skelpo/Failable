@@ -38,6 +38,8 @@ extension LengthValidation {
 /// Validates each element in a sequence using a custom validation function.
 ///
 ///     struct StringLengthArray: ElementValidation {
+///         typealias Supported = [String]
+///
 ///         static var validator: (String)throws -> Void = { str in
 ///             guard str.count <= 1028 else { throw ValidationError(identifier: "lengthToLong", reason: "String must have length 1028 or less") }
 ///         }
