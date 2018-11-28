@@ -5,8 +5,8 @@
 ///         static let minLength: Int = 10
 ///     }
 ///
-/// If the value passed into the `validate` method has a length the is greater than `maxLength`, `ValidationError.lengthToLong` is thrown.
-/// If the value has a length less than `minLength`, `ValidationError.lengthToShort` is thrown.
+/// If the value passed into the `validate` method has a length the is greater than `maxLength`, `ValidationError.lengthTooLong` is thrown.
+/// If the value has a length less than `minLength`, `ValidationError.lengthTooShort` is thrown.
 public protocol LengthValidation: Validation where Supported: Collection {
     
     /// The maximum length that the validated collection can have.
@@ -24,10 +24,10 @@ extension LengthValidation {
     /// See `Validation.validate(_:)`.
     static func validate(_ value: Supported)throws {
         guard value.count <= self.maxLength else {
-            throw ValidationError(identifier: "lengthToLong", reason: "Length of collection value is greater than \(self.maxLength)")
+            throw ValidationError(identifier: "lengthTooLong", reason: "Length of collection value is greater than \(self.maxLength)")
         }
         guard value.count >= self.minLength else {
-            throw ValidationError(identifier: "lengthToShort", reason: "Length of collection value is less than \(self.minLength)")
+            throw ValidationError(identifier: "lengthTooShort", reason: "Length of collection value is less than \(self.minLength)")
         }
     }
 }
