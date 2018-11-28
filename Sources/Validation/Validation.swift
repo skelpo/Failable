@@ -62,7 +62,7 @@ public extension Validation {
     /// - Parameter value: The value to validate.
     static func validate(_ value: Any)throws {
         guard let supported = value as? Supported else {
-            throw ValidationError.invalidType
+            throw ValidationError(identifier: "invalidType", reason: "Cannot convert Any to validation supported type")
         }
         return try self.validate(supported)
     }
