@@ -2,8 +2,6 @@ import XCTest
 @testable import Validation
 
 internal struct USPhoneNumber: RegexValidation {
-    typealias Supported = String
-    
     static let pattern = "1?-?\\(?[0-9]{3}\\)?-?[0-9]{3}-?[0-9]{4}"
 }
 
