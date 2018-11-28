@@ -20,6 +20,29 @@ public protocol AnyValidation {
     static func validate(_ value: Any)throws
 }
 
+extension AnyValidation {
+    
+    /// Runs the currenct validation and any subvalidations. This runs recursively until the bottom of the validation tree is found.
+    ///
+    /// - Parameters:
+    ///   - value: The value to validate.
+    ///   - type: The type that the valisation must support. If `nil` is passed in,
+    ///     the type is not checked and you could get a `ValidationError.invalidType` error.
+    public static func unsafeRun(_ value: Any, type: Any.Type? = nil)throws {
+        try self.validate(value)
+        if let unwrapped = type {
+            try self.subvalidations.forEach { validation in
+                guard validation.type == unwrapped else { return }
+                try validation.unsafeRun(value, type: unwrapped)
+            }
+        } else {
+            try self.subvalidations.forEach { validation in
+                try validation.unsafeRun(value)
+            }
+        }
+    }
+}
+
 /// A type that can be used to validate a new value for a `Failable` type.
 ///
 /// A `Validation` type can only be used for a `Failable` type if `Failable.T` and `Validation.Suuported` types are the same.
@@ -45,33 +68,44 @@ public protocol Validation: AnyValidation {
     static func validate(_ value: Supported)throws
 }
 
-public extension Validation {
-    static var type: Any.Type { return Supported.self }
-    static var subvalidations: [AnyValidation.Type] { return [] }
+extension Validation {
+    public static var type: Any.Type { return Supported.self }
+    public static var subvalidations: [AnyValidation.Type] { return [] }
     
     /// The default implementation of the `Validation.validate` method. Does nothing.
     /// You should keepo the default implementation if the validation is just a collection of other validations to run.
     ///
     /// - Parameter value: The value that is supposed to be validated.
-    static func validate(_ value: Supported)throws {}
+    public static func validate(_ value: Supported)throws {}
     
     /// The default implementation for the type-erased `validate` method. This implementation takes the value and trys to cast it
     /// to the associated `Support` type. If casting fails, `ValidationError.invalidType` is thrown.
     /// Otherwise, the type-safe `validate` method is called.
     ///
     /// - Parameter value: The value to validate.
-    static func validate(_ value: Any)throws {
+    public static func validate(_ value: Any)throws {
         guard let supported = value as? Supported else {
             throw ValidationError(identifier: "invalidType", reason: "Cannot convert Any to validation supported type")
         }
         return try self.validate(supported)
     }
+}
+
+extension Validation {
     
     /// Subvalidations that expect an input type that matches the validation's `Support` type.
-    static var safeSubvalidations: [AnyValidation.Type] {
+    public static var safeSubvalidations: [AnyValidation.Type] {
         return self.subvalidations.compactMap { validation in
             guard validation.type == Supported.self else { return nil }
             return validation
         }
+    }
+    
+    /// Runs the currenct validation and any subvalidations that support the `Supported` type.
+    /// This runs recursively until the bottom of the validation tree is found.
+    ///
+    /// - Parameter value: The value to validate.
+    public static func run(_ value: Supported)throws {
+        try self.unsafeRun(value, type: Supported.self)
     }
 }
