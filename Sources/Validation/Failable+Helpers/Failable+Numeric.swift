@@ -26,6 +26,11 @@ extension Failable where T: Numeric {
         try lhs <~ lhs.value * rhs.value
     }
     
+    /// See [`Numeric.+(_:)`]https://developer.apple.com/documentation/swift/numeric/2886206).
+    public static prefix func + (lhs: Failable<T, Validations>)throws -> Failable<T, Validations> {
+        return lhs
+    }
+    
     /// See [`Numeric.+(_:_:)`](https://developer.apple.com/documentation/swift/numeric/2884921).
     public static func + (lhs: Failable<T, Validations>, rhs: Failable<T, Validations>)throws -> Failable<T, Validations> {
         return try Failable(lhs.value + rhs.value)
