@@ -21,3 +21,13 @@ extension Failable: RawRepresentable where T: RawRepresentable {
     }
 }
 
+extension Failable where T: CaseIterable {
+    
+    /// See [`CaseIterable.AllCases`](https://developer.apple.com/documentation/swift/caseiterable/2994868-allcases).
+    public typealias AllCases = T.AllCases
+    
+    /// See [`CaseIterable.allCases`](https://developer.apple.com/documentation/swift/caseiterable/2994869-allcases).
+    public static var allCases: T.AllCases {
+        return T.allCases
+    }
+}
