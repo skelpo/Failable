@@ -28,6 +28,8 @@ extension Failable where T: BinaryInteger {
     }
     
     /// See [`BinaryInteger.init(exactly:)`](https://developer.apple.com/documentation/swift/binaryinteger/2925955-init).
+    ///
+    /// If an error is thrown by the `Failable` initializer, then this init will return `nil`.
     public init?<B>(exactly source: B) where B : BinaryFloatingPoint {
         guard let t = T(exactly: source) else { return nil }
         try? self.init(t)
