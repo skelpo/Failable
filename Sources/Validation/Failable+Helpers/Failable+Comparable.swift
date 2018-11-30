@@ -38,6 +38,20 @@ extension Failable: Comparable where T: Comparable {
     }
 }
 
+/// See [`Comparable....(_:_:)`](https://developer.apple.com/documentation/swift/comparable/2949800).
+public func ... <T, V1, V2>(lhs: Failable<T, V1>, rhs: Failable<T, V2>)throws
+    -> Failable<ClosedRange<T>, ElementValidation<ClosedRange<T>, AppendedValidations<T, V1, V2>>> where T: Comparable
+{
+    return try Failable(lhs.value...rhs.value)
+}
+
+/// See [`Comparable...<(_:_:)`](https://developer.apple.com/documentation/swift/comparable/2949700).
+public func ..< <T, V1, V2>(lhs: Failable<T, V1>, rhs: Failable<T, V2>)throws
+    -> Failable<Range<T>, ElementValidation<Range<T>, AppendedValidations<T, V1, V2>>> where T: Comparable
+{
+    return try Failable(lhs.value..<rhs.value)
+}
+
 /// Checks that the `value` property from one `Failable` instance is great than another, where type `T` is the same and comforms to `Comparable`,
 /// but the `Validations` are different.
 ///
