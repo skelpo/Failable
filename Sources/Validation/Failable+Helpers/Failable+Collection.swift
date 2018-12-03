@@ -37,7 +37,7 @@ extension Failable: BidirectionalCollection where T: BidirectionalCollection {
 
 extension Failable: RandomAccessCollection where T: RandomAccessCollection {}
 
-extension Failable: MutableCollection where T: MutableCollection {
+extension Failable where T: MutableCollection {
     
     /// See [`MutableCollection.[]`](https://developer.apple.com/documentation/swift/mutablecollection/1640969-subscript).
     ///
@@ -55,5 +55,20 @@ extension Failable: MutableCollection where T: MutableCollection {
                 try self <~ copy.value
             } catch {}
         }
+    }
+    
+    public mutating func partition(by belongsInSecondPartition: (Element) throws -> Bool)throws -> Index {
+        var copy = self.value
+        let index = try copy.partition(by: belongsInSecondPartition)
+        
+        try self <~ copy
+        return index
+    }
+    
+    public mutating func swapAt(_ i: Index, _ j: Index)throws {
+        var copy = self.value
+        copy.swapAt(i, j)
+        
+        try self <~ copy
     }
 }
