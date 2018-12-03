@@ -36,3 +36,24 @@ extension Failable: BidirectionalCollection where T: BidirectionalCollection {
 }
 
 extension Failable: RandomAccessCollection where T: RandomAccessCollection {}
+
+extension Failable: MutableCollection where T: MutableCollection {
+    
+    /// See [`MutableCollection.[]`](https://developer.apple.com/documentation/swift/mutablecollection/1640969-subscript).
+    ///
+    /// To validate the new array, the instance is copied and mutated, then the validation is run on the mutated instance.
+    /// If the validation succeeds, the mutated value is assigned to the current instance. If the validation fails, the set silently fails.
+    public subscript(position: T.Index) -> T.Element {
+        get {
+            return self.value[position]
+        }
+        set(newValue) {
+            var copy = self
+            copy.value[position] = newValue
+            
+            do {
+                try self <~ copy.value
+            } catch {}
+        }
+    }
+}
