@@ -34,3 +34,5 @@ extension Failable: BidirectionalCollection where T: BidirectionalCollection {
         return self.value.index(before: i)
     }
 }
+
+extension Failable: RandomAccessCollection where T: RandomAccessCollection {}
