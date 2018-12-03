@@ -27,3 +27,10 @@ extension Failable: Collection where T: Collection {
     }
 }
 
+extension Failable: BidirectionalCollection where T: BidirectionalCollection {
+    
+    /// See [`BidirectionalCollection.index(before:)`](https://developer.apple.com/documentation/swift/bidirectionalcollection/1783013-index).
+    public func index(before i: T.Index) -> T.Index {
+        return self.value.index(before: i)
+    }
+}
