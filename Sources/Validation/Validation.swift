@@ -95,10 +95,7 @@ extension Validation {
     
     /// Subvalidations that expect an input type that matches the validation's `Support` type.
     public static var safeSubvalidations: [AnyValidation.Type] {
-        return self.subvalidations.compactMap { validation in
-            guard validation.type == Supported.self else { return nil }
-            return validation
-        }
+        return self.subvalidations.filter { $0.type == Supported.self }
     }
     
     /// Runs the currenct validation and any subvalidations that support the `Supported` type.
