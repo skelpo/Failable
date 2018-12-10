@@ -3,13 +3,13 @@
 import PackageDescription
 
 let package = Package(
-    name: "Validation",
+    name: "Failable",
     products: [
-        .library(name: "Validation", targets: ["Validation"]),
+        .library(name: "Failable", targets: ["Failable"]),
     ],
     dependencies: [],
     targets: [
-        .target(name: "Validation", dependencies: []),
-        .testTarget(name: "ValidationTests", dependencies: ["Validation"]),
+        .target(name: "Failable", dependencies: []),
+        .testTarget(name: "FailableTests", dependencies: ["Failable"]),
     ]
 )
