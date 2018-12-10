@@ -1,6 +1,40 @@
 {
   "warnings": [
-
+    {
+      "file": "/Users/calebkleveter/Development/Skelpo/Validation/Sources/Validation/Failable+Helpers/Failable+FloatingPoint.swift",
+      "line": 363,
+      "symbol": "Failable.truncatingRemainder(dividingBy:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/calebkleveter/Development/Skelpo/Validation/Sources/Validation/Failable+Helpers/Failable+FloatingPoint.swift",
+      "line": 486,
+      "symbol": "<(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.free",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/calebkleveter/Development/Skelpo/Validation/Sources/Validation/Failable+Helpers/Failable+FloatingPoint.swift",
+      "line": 490,
+      "symbol": "<=(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.free",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/calebkleveter/Development/Skelpo/Validation/Sources/Validation/Failable+Helpers/Failable+FloatingPoint.swift",
+      "line": 494,
+      "symbol": ">(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.free",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/calebkleveter/Development/Skelpo/Validation/Sources/Validation/Failable+Helpers/Failable+FloatingPoint.swift",
+      "line": 498,
+      "symbol": ">=(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.free",
+      "warning": "undocumented"
+    }
   ],
   "source_directory": "/Users/calebkleveter/Development/Skelpo/Validation"
 }
