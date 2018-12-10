@@ -57,6 +57,25 @@ extension Failable where T: MutableCollection {
         }
     }
     
+    /// See [`MutableCollection.[]`](https://developer.apple.com/documentation/swift/mutablecollection/2965317-subscript).
+    ///
+    /// To validate the new array, the instance is copied and mutated, then the validation is run on the mutated instance.
+    /// If the validation succeeds, the mutated value is assigned to the current instance. If the validation fails, the set silently fails.
+    public subscript(position: Range<T.Index>) -> T.SubSequence {
+        get {
+            return self.value[position]
+        }
+        set(newValue) {
+            var copy = self
+            copy.value[position] = newValue
+            
+            do {
+                try self <~ copy.value
+            } catch {}
+        }
+    }
+    
+    /// See [`MutableCollection.partition(by:)`](https://developer.apple.com/documentation/swift/mutablecollection/3018221-partition).
     public mutating func partition(by belongsInSecondPartition: (Element) throws -> Bool)throws -> Index {
         var copy = self.value
         let index = try copy.partition(by: belongsInSecondPartition)
@@ -65,6 +84,7 @@ extension Failable where T: MutableCollection {
         return index
     }
     
+    /// See [`MutableCollection.swapAt(_:_:)`](https://developer.apple.com/documentation/swift/mutablecollection/3018230-swapat).
     public mutating func swapAt(_ i: Index, _ j: Index)throws {
         var copy = self.value
         copy.swapAt(i, j)
