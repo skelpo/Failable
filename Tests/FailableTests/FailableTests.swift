@@ -1,5 +1,5 @@
 import XCTest
-@testable import Validation
+@testable import Failable
 
 final class FailableTests: XCTestCase {
     func testInit()throws {

@@ -1,5 +1,5 @@
 import XCTest
-@testable import Validation
+@testable import Failable
 
 typealias OptionalStringLength = NotNilValidate<LengthRange10To1028<String>>
 
