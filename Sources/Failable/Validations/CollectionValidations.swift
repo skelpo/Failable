@@ -21,10 +21,10 @@ public protocol LengthValidation: Validation where Supported: Collection {
 }
 
 extension LengthValidation {
-    static var minLength: Int { return 0 }
+    public static var minLength: Int { return 0 }
     
     /// See `Validation.validate(_:)`.
-    static func validate(_ value: Supported)throws {
+    public static func validate(_ value: Supported)throws {
         guard value.count <= self.maxLength else {
             throw ValidationError(identifier: "lengthTooLong", reason: "Length of collection value is greater than \(self.maxLength)")
         }

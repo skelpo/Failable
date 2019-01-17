@@ -1,5 +1,5 @@
 import XCTest
-@testable import Validation
+@testable import Failable
 
 internal struct LengthRange10To1028<C>: LengthValidation where C: Collection {
     typealias Supported = C

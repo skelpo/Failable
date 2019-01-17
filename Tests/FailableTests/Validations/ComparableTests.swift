@@ -1,5 +1,5 @@
 import XCTest
-@testable import Validation
+@testable import Failable
 
 internal struct NumberThousand: InRangeValidation {
     typealias Supported = Int

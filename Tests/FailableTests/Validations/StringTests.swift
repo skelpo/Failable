@@ -1,5 +1,5 @@
 import XCTest
-@testable import Validation
+@testable import Failable
 
 internal struct USPhoneNumber: RegexValidation {
     static let pattern = "1?-?\\(?[0-9]{3}\\)?-?[0-9]{3}-?[0-9]{4}"
