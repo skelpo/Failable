@@ -24,8 +24,8 @@ public protocol InRangeValidation: Validation where Supported: Comparable {
 }
 
 extension InRangeValidation {
-    static var max: Supported? { return nil }
-    static var min: Supported? { return nil }
+    public static var max: Supported? { return nil }
+    public static var min: Supported? { return nil }
     
     /// See `Validation.validate(_:)`.
     public static func validate(_ value: Supported)throws {
