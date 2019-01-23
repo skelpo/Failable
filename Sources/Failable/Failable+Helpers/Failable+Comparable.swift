@@ -18,6 +18,15 @@ public func == <T, V1, V2>(lhs: Failable<T, V1>, rhs: Failable<T, V2>) -> Bool w
     return lhs.value == rhs.value
 }
 
+/// Checks for equality of the `value` property from one `Failable` instances with another value of type `T`.
+///
+/// - Parameters:
+///   - lhs: The `Failable` instance to compare.
+///   - rhs: The `T` value to compare.
+public func == <T, V1>(lhs: Failable<T, V1>, rhs: T) -> Bool where T: Equatable {
+    return lhs.value == rhs
+}
+
 /// Checks for inequality of the `value` property from two `Failable` instances where type `T` is the same and comforms to `Equatable`,
 /// but the `Validations` are different.
 ///
@@ -26,6 +35,15 @@ public func == <T, V1, V2>(lhs: Failable<T, V1>, rhs: Failable<T, V2>) -> Bool w
 ///   - rhs: The right `Failable` instance to compare.
 public func != <T, V1, V2>(lhs: Failable<T, V1>, rhs: Failable<T, V2>) -> Bool where T: Equatable {
     return lhs.value != rhs.value
+}
+
+/// Checks for inequality of the `value` property from one `Failable` instances with another value of type `T`.
+///
+/// - Parameters:
+///   - lhs: The `Failable` instance to compare.
+///   - rhs: The `T` value to compare.
+public func != <T, V1>(lhs: Failable<T, V1>, rhs: T) -> Bool where T: Equatable {
+    return lhs.value != rhs
 }
 
 // MARK: - Comparable
