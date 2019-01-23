@@ -12,6 +12,17 @@ extension Failable: Decodable where T: Decodable {
     /// See [`Decodable.init(from:)`](https://developer.apple.com/documentation/swift/decodable/2894081-init)
     public init(from decoder: Decoder)throws {
         let container = try decoder.singleValueContainer()
-        try self.init(container.decode(T.self))
+        
+        guard _isOptional(T.self) else {
+            try self.init(try container.decode(T.self))
+            return
+        }
+        
+        guard container.decodeNil() else {
+            try self.init(try container.decode(T.self))
+            return
+        }
+        
+        try self.init(Void?.none as! T)
     }
 }
