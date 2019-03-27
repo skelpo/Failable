@@ -54,10 +54,4 @@ final class ComparableTests: XCTestCase {
         try XCTAssertThrowsError(int <~ 10_000)
         try XCTAssertThrowsError(int <~ Int.max)
     }
-    
-    static var allTests: [(String, (ComparableTests) -> ()throws -> ())] = [
-        ("testNumberThousand", testNumberThousand),
-        ("testGreaterThan", testGreaterThan),
-        ("testLessThan", testLessThan)
-    ]
 }

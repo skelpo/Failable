@@ -42,9 +42,4 @@ final class CollectionTests: XCTestCase {
         try strings <~ ["G", "OOOO", "World", longest]
         XCTAssertEqual(strings.value, ["G", "OOOO", "World", longest])
     }
-    
-    static var allTests: [(String, (CollectionTests) -> ()throws -> ())] = [
-        ("testLengthValidation", testLengthValidation),
-        ("testElementValidation", testElementValidation)
-    ]
 }

@@ -41,12 +41,4 @@ final class FailableTests: XCTestCase {
         
         XCTAssertEqual(object.value, ["key": "value"])
     }
-    
-    static var allTests: [(String, (FailableTests) -> ()throws -> ())] = [
-        ("testInit", testInit),
-        ("testSet", testSet),
-        ("testKeyPathSubscript", testKeyPathSubscript),
-        ("testEncode", testEncode),
-        ("testDecode", testDecode)
-    ]
 }

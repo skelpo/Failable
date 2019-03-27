@@ -18,9 +18,5 @@ final class StringTests: XCTestCase {
         try XCTAssertThrowsError(number <~ "1-800-EAT-MEAT")
         try XCTAssertThrowsError(number <~ "4316-943-731")
     }
-    
-    static var allTests: [(String, (StringTests) -> ()throws -> ())] = [
-        ("testUSPhoneNumber", testUSPhoneNumber)
-    ]
 }
 

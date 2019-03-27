@@ -24,11 +24,6 @@ final class OptionalTests: XCTestCase {
         try XCTAssertThrowsError(optional <~ String(repeating: "x", count: 9))
         try XCTAssertThrowsError(optional <~ String(repeating: "x", count: 1029))
     }
-    
-    static var allTests: [(String, (OptionalTests) -> ()throws -> ())] = [
-        ("testNotNil", testNotNil),
-        ("testNotNilValidate", testNotNilValidate)
-    ]
 }
 
 
