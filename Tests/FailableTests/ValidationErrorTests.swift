@@ -28,11 +28,5 @@ final class ValidationErrorTests: XCTestCase {
         XCTAssertEqual(error.identifier, "id")
         XCTAssertEqual(error.reason, "I gotta reason")
     }
-    
-    static var allTests: [(String, (ValidationErrorTests) -> ()throws -> ())] = [
-        ("testInit", testInit),
-        ("testEncode", testEncode),
-        ("testDecode", testDecode)
-    ]
 }
 

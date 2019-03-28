@@ -3,7 +3,7 @@ import XCTest
 
 final class FailableTests: XCTestCase {
     func testInit()throws {
-        var story: Failable<String, USPhoneNumber> = try "Hello world...".failable()
+        var story: Failable<String, EmptyValidation<String>> = try "Hello world...".failable()
         XCTAssertEqual(story.value, "Hello world...")
         
         story = try "Long long ago...".failable()
@@ -11,7 +11,7 @@ final class FailableTests: XCTestCase {
     }
     
     func testSet()throws {
-        var story: Failable<String, USPhoneNumber> = try "Hello world...".failable()
+        var story: Failable<String, EmptyValidation<String>> = try "Hello world...".failable()
         try story <~ "Long long ago..."
         
         XCTAssertEqual(story.value, "Long long ago...")
@@ -41,12 +41,4 @@ final class FailableTests: XCTestCase {
         
         XCTAssertEqual(object.value, ["key": "value"])
     }
-    
-    static var allTests: [(String, (FailableTests) -> ()throws -> ())] = [
-        ("testInit", testInit),
-        ("testSet", testSet),
-        ("testKeyPathSubscript", testKeyPathSubscript),
-        ("testEncode", testEncode),
-        ("testDecode", testDecode)
-    ]
 }

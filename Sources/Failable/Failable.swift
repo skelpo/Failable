@@ -45,8 +45,8 @@ public struct Failable<T, Validations> where Validations: Validation, Validation
     /// - Parameter t: The orginal value for the instance.
     ///   This value will be validated and the initializer will fail if it doesn't pass.
     public init(_ t: T)throws {
+        try Validations.run(t)
         self.value = t
-        try self <~ t
     }
     
     /// Gets the value of a property of the `value` property using a key path.

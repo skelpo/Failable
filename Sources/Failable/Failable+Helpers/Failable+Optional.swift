@@ -27,10 +27,10 @@ extension Failable {
 
 /// See [`Optional.??(_:_:)`](https://developer.apple.com/documentation/swift/1539917).
 public func ?? <T, V>(optional: Failable<T?, V>, defaultValue: @autoclosure () throws -> T) rethrows -> T {
-    return try optional.value ?? defaultValue
+    return try optional.value ?? defaultValue()
 }
 
 /// See [`Optional.??(_:_:)`](https://developer.apple.com/documentation/swift/1541015).
 public func ?? <T, V>(optional: Failable<T?, V>, defaultValue: @autoclosure () throws -> T?) rethrows -> T? {
-    return try optional.value ?? defaultValue
+    return try optional.value ?? defaultValue()
 }

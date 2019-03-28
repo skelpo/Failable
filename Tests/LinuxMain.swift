@@ -1,7 +1,8 @@
 import XCTest
 
-import ValidationTests
+import FailableTests
 
 var tests = [XCTestCaseEntry]()
-tests += ValidationTests.allTests()
+tests += FailableTests.__allTests()
+
 XCTMain(tests)

@@ -22,7 +22,7 @@ internal struct LessThan: InRangeValidation {
 
 final class ComparableTests: XCTestCase {
     func testNumberThousand()throws {
-        var int = try Failable<Int, NumberThousand>(5_000)
+        var int = Failable<Int, NumberThousand>(5_000)
         
         try int <~ 9_999
         try int <~ 1_000
@@ -32,7 +32,7 @@ final class ComparableTests: XCTestCase {
     }
     
     func testGreaterThan()throws {
-        var int = try Failable<Int, GreaterThan>(5_000)
+        var int = Failable<Int, GreaterThan>(5_000)
         
         try int <~ 1_000
         try int <~ 10_000
@@ -44,7 +44,7 @@ final class ComparableTests: XCTestCase {
     }
     
     func testLessThan()throws {
-        var int = try Failable<Int, LessThan>(5_000)
+        var int = Failable<Int, LessThan>(5_000)
         
         try int <~ 9_999
         try int <~ 999
@@ -54,10 +54,4 @@ final class ComparableTests: XCTestCase {
         try XCTAssertThrowsError(int <~ 10_000)
         try XCTAssertThrowsError(int <~ Int.max)
     }
-    
-    static var allTests: [(String, (ComparableTests) -> ()throws -> ())] = [
-        ("testNumberThousand", testNumberThousand),
-        ("testGreaterThan", testGreaterThan),
-        ("testLessThan", testLessThan)
-    ]
 }

@@ -52,10 +52,4 @@ final class ValidationTests: XCTestCase {
             XCTAssert(validation.type == Bool.self)
         }
     }
-    
-    static var allTests: [(String, (ValidationTests) -> ()throws -> ())] = [
-        ("testType", testType),
-        ("testDefaultImplementations", testDefaultImplementations),
-        ("testSafeSubvalidations", testSafeSubvalidations)
-    ]
 }
