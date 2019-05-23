@@ -31,3 +31,30 @@ public struct ValidationError: Codable, Error {
         )
     }
 }
+
+/// A combination of two errors that have occured.
+public struct ErrorJoin: Error, CustomStringConvertible {
+
+    /// One the of the errors that is joined.
+    public let left: Error
+
+    /// One the of the errors that is joined.
+    public let right: Error
+
+    /// Creates a new `ErrorJoin` instance from two other errors.
+    ///
+    /// - Parameters:
+    ///   - left: One the of the errors that is joined.
+    ///   - right: One the of the errors that is joined.
+    public init(_ left: Error, _ right: Error) {
+        self.left = left
+        self.right = right
+    }
+
+    /// See `CustomStringConvertible.description`.
+    ///
+    /// - Returns: A string formatted as `(left.description|right.description)`.
+    public var description: String {
+        return "(\(self.left.localizedDescription)|\(self.right.localizedDescription))"
+    }
+}
