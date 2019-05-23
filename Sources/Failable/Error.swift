@@ -16,4 +16,18 @@ public struct ValidationError: Codable, Error {
         self.identifier = identifier
         self.reason = reason
     }
+
+    /// Creates a `ValidationError.operationFailed` error.
+    ///
+    /// This error is used when an operation is called on a `Failable` instance, but the given instance
+    /// holds an error instead of a valid value.
+    ///
+    /// - Parameter error: The error held by the `Failable` instance.
+    /// - Returns: A `ValidationError` instance with `operationFailed` as the identifier.
+    static func foundError(_ error: Error) -> ValidationError {
+        return ValidationError(
+            identifier: "operationFailed",
+            reason: "Found error instead of expected value.\nError: \(error.localizedDescription)"
+        )
+    }
 }
