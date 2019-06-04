@@ -91,3 +91,39 @@ extension Failable: SignedNumeric where T: SignedNumeric {
         return Failable<T, Validations>(-value)
     }
 }
+
+/// See [`AdditiveArithmetic.-(_:_:)`](https://developer.apple.com/documentation/swift/additivearithmetic/3126825).
+public func - <T, V1, V2>(lhs: Failable<T, V1>, rhs: Failable<T, V2>) -> Failable<T, AppendedValidations<V1, V2>>
+    where T: AdditiveArithmetic
+{
+    return Failable<T, V1>.map(lhs, rhs) { (left: T, right: T) -> T in left - right }
+}
+
+/// See [`AdditiveArithmetic.+(_:_:)`](https://developer.apple.com/documentation/swift/additivearithmetic/3126821).
+public func + <T, V1, V2>(lhs: Failable<T, V1>, rhs: Failable<T, V2>) -> Failable<T, AppendedValidations<V1, V2>>
+    where T: AdditiveArithmetic
+{
+    return Failable<T, V1>.map(lhs, rhs) { (left: T, right: T) -> T in left + right }
+}
+
+/// See [`Numeric.*(_:_:)`](https://developer.apple.com/documentation/swift/numeric/2883821).
+public func * <T, V1, V2>(lhs: Failable<T, V1>, rhs: Failable<T, V2>) -> Failable<T, AppendedValidations<V1, V2>>
+    where T: Numeric
+{
+    return Failable<T, V1>.map(lhs, rhs) { (left: T, right: T) -> T in left * right }
+}
+
+/// See [`AdditiveArithmetic.-=(_:_:)`](https://developer.apple.com/documentation/swift/additivearithmetic/3126828).
+public func -= <T, V1, V2>(lhs: inout Failable<T, V1>, rhs: Failable<T, V2>) where T: AdditiveArithmetic {
+    lhs = Failable<T, V1>.map(lhs, rhs) { (left: T, right: T) -> T in left - right }
+}
+
+/// See [`AdditiveArithmetic.+=(_:_:)`](https://developer.apple.com/documentation/swift/additivearithmetic/3126824).
+public func += <T, V1, V2>(lhs: inout Failable<T, V1>, rhs: Failable<T, V2>) where T: AdditiveArithmetic {
+    lhs = Failable<T, V1>.map(lhs, rhs) { (left: T, right: T) -> T in left + right }
+}
+
+/// See [`Numeric.*=(_:_:)`](https://developer.apple.com/documentation/swift/numeric/2886882).
+public func *= <T, V1, V2>(lhs: inout Failable<T, V1>, rhs: Failable<T, V2>) where T: Numeric {
+    lhs = Failable<T, V1>.map(lhs, rhs) { (left: T, right: T) -> T in left * right }
+}

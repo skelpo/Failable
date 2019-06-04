@@ -3,10 +3,10 @@
 /// This validation is used for things such as numeric operations where `Failable` types with different validations are used.
 ///
 /// The validations used must have the same `Supported` type.
-public struct AppendedValidations<T, V1, V2>: Validation where V1: Validation, V2: Validation, V1.Supported == T, V2.Supported == T {
+public struct AppendedValidations<V1, V2>: Validation where V1: Validation, V2: Validation, V1.Supported == V2.Supported {
     
     /// See `Validation.Supported`.
-    public typealias Supported = T
+    public typealias Supported = V1.Supported
     
     /// See `Validation.subvalidations`.
     ///

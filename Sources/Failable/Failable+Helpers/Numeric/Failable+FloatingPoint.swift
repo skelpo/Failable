@@ -261,3 +261,15 @@ extension Failable: BinaryFloatingPoint where T: BinaryFloatingPoint, Validation
         self = Failable.map(expBP, sigBP) { exp, sig in T(sign: sign, exponentBitPattern: exp, significandBitPattern: sig) }
     }
 }
+
+/// See [`Numeric.*(_:_:)`](https://developer.apple.com/documentation/swift/numeric/2883821).
+public func / <T, V1, V2>(lhs: Failable<T, V1>, rhs: Failable<T, V2>) -> Failable<T, AppendedValidations<V1, V2>>
+    where T: FloatingPoint
+{
+    return Failable<T, V1>.map(lhs, rhs) { (left: T, right: T) -> T in left / right }
+}
+
+/// See [`AdditiveArithmetic.-=(_:_:)`](https://developer.apple.com/documentation/swift/additivearithmetic/3126828).
+public func /= <T, V1, V2>(lhs: inout Failable<T, V1>, rhs: Failable<T, V2>) where T: FloatingPoint {
+    lhs = Failable<T, V1>.map(lhs, rhs) { (left: T, right: T) -> T in left / right }
+}

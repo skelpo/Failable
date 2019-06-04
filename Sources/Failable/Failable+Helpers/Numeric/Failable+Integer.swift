@@ -244,3 +244,58 @@ extension Failable: BinaryInteger where T: BinaryInteger {
         lhs = lhs.map { $0 << rhs }
     }
 }
+
+/// See [`BinaryInteger.%(_:_:)`](https://developer.apple.com/documentation/swift/binaryinteger/2885003).
+public func % <T, V1, V2>(lhs: Failable<T, V1>, rhs: Failable<T, V2>) -> Failable<T, AppendedValidations<V1, V2>>
+    where T: BinaryInteger
+{
+    return Failable<T, V1>.map(lhs, rhs) { (left: T, right: T) -> T in left % right }
+}
+
+/// See [`BinaryInteger.&(_:_:)`](https://developer.apple.com/documentation/swift/binaryinteger/3017613).
+public func & <T, V1, V2>(lhs: Failable<T, V1>, rhs: Failable<T, V2>) -> Failable<T, AppendedValidations<V1, V2>>
+    where T: BinaryInteger
+{
+    return Failable<T, V1>.map(lhs, rhs) { (left: T, right: T) -> T in left & right }
+}
+
+/// See [`BinaryInteger.<(_:_:)`](https://developer.apple.com/documentation/swift/binaryinteger/2885984).
+public func < <T, V1, V2>(lhs: Failable<T, V1>, rhs: Failable<T, V2>) -> Bool
+    where T: BinaryInteger
+{
+    return Failable<Bool, EmptyValidation<Bool>>(Failable<T, V1>.map(lhs, rhs) { (left: T, right: T) -> Bool in left < right }).value ?? false
+}
+
+/// See [`BinaryInteger.^(_:_:)`](https://developer.apple.com/documentation/swift/binaryinteger/3017635).
+public func ^ <T, V1, V2>(lhs: Failable<T, V1>, rhs: Failable<T, V2>) -> Failable<T, AppendedValidations<V1, V2>>
+    where T: BinaryInteger
+{
+    return Failable<T, V1>.map(lhs, rhs) { (left: T, right: T) -> T in left ^ right }
+}
+
+/// See [`BinaryInteger.|(_:_:)`](https://developer.apple.com/documentation/swift/binaryinteger/3017645).
+public func | <T, V1, V2>(lhs: Failable<T, V1>, rhs: Failable<T, V2>) -> Failable<T, AppendedValidations<V1, V2>>
+    where T: BinaryInteger
+{
+    return Failable<T, V1>.map(lhs, rhs) { (left: T, right: T) -> T in left | right }
+}
+
+/// See [`BinaryInteger.%=(_:_:)`](https://developer.apple.com/documentation/swift/binaryinteger/2886158).
+public func %= <T, V1, V2>(lhs: inout Failable<T, V1>, rhs: Failable<T, V2>) where T: BinaryInteger {
+    lhs = Failable<T, V1>.map(lhs, rhs) { (left: T, right: T) -> T in left % right }
+}
+
+/// See [`BinaryInteger.&=(_:_:)`](https://developer.apple.com/documentation/swift/binaryinteger/2885976).
+public func &= <T, V1, V2>(lhs: inout Failable<T, V1>, rhs: Failable<T, V2>) where T: BinaryInteger {
+    lhs = Failable<T, V1>.map(lhs, rhs) { (left: T, right: T) -> T in left & right }
+}
+
+/// See [`BinaryInteger.^=(_:_:)`](https://developer.apple.com/documentation/swift/binaryinteger/2885182).
+public func ^= <T, V1, V2>(lhs: inout Failable<T, V1>, rhs: Failable<T, V2>) where T: BinaryInteger {
+    lhs = Failable<T, V1>.map(lhs, rhs) { (left: T, right: T) -> T in left ^ right }
+}
+
+/// See [`BinaryInteger.|=(_:_:)`](https://developer.apple.com/documentation/swift/binaryinteger/2884669).
+public func |= <T, V1, V2>(lhs: inout Failable<T, V1>, rhs: Failable<T, V2>) where T: BinaryInteger {
+    lhs = Failable<T, V1>.map(lhs, rhs) { (left: T, right: T) -> T in left | right }
+}
