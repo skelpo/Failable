@@ -30,7 +30,7 @@ public typealias NonFailable<T> = Failable<T, EmptyValidation<T>>
 /// `Failable` supprts initialization with certain type literals if the `value` type `T` also supports it.
 /// Initialization is supported for `Int`, `Float`, `Bool`, `nil`, and `String` types.
 ///
-///     let string = Failable<String, EmptyValidationM<String>> = "Hello world"
+///     let string = Failable<String, EmptyValidation<String>> = "Hello world"
 ///
 /// - Warning: Because literal initializers cannot fail, your program will crash if the value passed in does not pass validation.
 ///
