@@ -1,3 +1,6 @@
+/// A `Failable` type with a validation that can't fail.
+public typealias NonFailable<T> = Failable<T, EmptyValidation<T>>
+
 /// A type that can fail when being set because the new value does pass certain validations.
 ///
 /// You can create a `Failable` instance in 2 ways. The first is to use the `Failable` initializer:
