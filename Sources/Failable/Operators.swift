@@ -10,6 +10,6 @@ infix operator <~: AssignmentPrecedence
 /// - Parameters:
 ///   - root: The `Failable` instance that holds the value to be mutated.
 ///   - value: The new value for the `root.value` property.
-public func <~ <T, Validations>(root: inout Failable<T, Validations>, value: T)throws {
+public func <~ <T, Validations>(root: inout Failable<T, Validations>, value: T) {
     root.value = value
 }
