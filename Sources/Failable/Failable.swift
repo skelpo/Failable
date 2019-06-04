@@ -52,14 +52,14 @@ public struct Failable<T, Validations> where Validations: Validation, Validation
     /// Thie property will return `nil` if an error is held instead.
     ///
     /// You can set the stored value if the `Failable` instance by using this properties setter.
-    /// The value will not be set if `nil` is passed in.
+    /// The value will not be set if `T` is non-optional and `nil` is passed in.
     public var value: T? {
         get {
             guard case let .success(value) = self.stored else { return nil }
             return value
         }
         set {
-            guard let value = newValue else { return }
+            guard !_isOptional(T.self), let value = newValue else { return }
             self.stored = Result(catching: {
                 try Validations.run(value)
                 return value
