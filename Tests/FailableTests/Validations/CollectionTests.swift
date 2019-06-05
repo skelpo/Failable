@@ -17,29 +17,32 @@ internal typealias StringLengthArray = ElementValidation<[String], Length1028<St
 
 final class CollectionTests: XCTestCase {
     func testLengthValidation()throws {
-        try XCTAssertThrowsError(Failable<[Bool], LengthRange10To1028<[Bool]>>([]))
+        try XCTAssertThrowsError(Failable([], LengthRange10To1028<[Bool]>.self).get())
         
-        var bools = try Failable<[Bool], LengthRange10To1028<[Bool]>>([true, true, true, false, false, false, true, true, false, false])
+        var bools = Failable([true, true, true, false, false, false, true, true, false, false], LengthRange10To1028<[Bool]>.self)
         XCTAssertEqual(bools.value, [true, true, true, false, false, false, true, true, false, false])
         
-        try XCTAssertThrowsError(bools <~ Array(repeating: true, count: 5))
-        try XCTAssertThrowsError(bools <~ Array(repeating: false, count: 5))
-        try XCTAssertThrowsError(bools <~ Array(repeating: true, count: 1029))
-        try XCTAssertThrowsError(bools <~ Array(repeating: false, count: 1029))
+        bools <~ Array(repeating: true, count: 5)
+        bools <~ Array(repeating: false, count: 5)
+        bools <~ Array(repeating: true, count: 1029)
+        bools <~ Array(repeating: false, count: 1029)
+        try XCTAssertThrowsError(bools.get())
         
         let array = Array(repeating: true, count: 1028)
-        try bools <~ array
+        bools <~ array
         XCTAssertEqual(bools.value, array)
     }
     
     func testElementValidation()throws {
         let tooLong = String(repeating: "x", count: 1029)
         let longest = String(repeating: "g", count: 1028)
-        var strings = try Failable<[String], StringLengthArray>(["G", "D", "A", "E"])
+        var strings = Failable<[String], StringLengthArray>(["G", "D", "A", "E"])
         XCTAssertEqual(strings.value, ["G", "D", "A", "E"])
         
-        try XCTAssertThrowsError(strings <~ ["G", "O", "O", tooLong])
-        try strings <~ ["G", "OOOO", "World", longest]
+        strings <~ ["G", "O", "O", tooLong]
+        try XCTAssertThrowsError(strings.get())
+
+        strings <~ ["G", "OOOO", "World", longest]
         XCTAssertEqual(strings.value, ["G", "OOOO", "World", longest])
     }
 }

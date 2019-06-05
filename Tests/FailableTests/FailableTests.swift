@@ -3,29 +3,29 @@ import XCTest
 
 final class FailableTests: XCTestCase {
     func testInit()throws {
-        var story: Failable<String, EmptyValidation<String>> = try "Hello world...".failable()
+        var story: NonFailable<String> = "Hello world...".failable()
         XCTAssertEqual(story.value, "Hello world...")
         
-        story = try "Long long ago...".failable()
+        story = "Long long ago...".failable()
         XCTAssertEqual(story.value, "Long long ago...")
     }
     
     func testSet()throws {
-        var story: Failable<String, EmptyValidation<String>> = try "Hello world...".failable()
-        try story <~ "Long long ago..."
+        var story: NonFailable<String> = "Hello world...".failable()
+        story <~ "Long long ago..."
         
         XCTAssertEqual(story.value, "Long long ago...")
     }
     
     func testKeyPathSubscript()throws {
         let string = "Hello World"
-        let failable: Failable<String, EmptyValidation<String>> = try string.failable()
+        let failable: NonFailable<String> = string.failable()
         
         XCTAssertEqual(failable[keyPath: \.count], string.count)
     }
     
     func testEncode()throws {
-        let data: Failable<[String: String], EmptyValidation<[String: String]>> = try ["key": "value"].failable()
+        let data = Failable(["key": "value"], EmptyValidation<[String: String]>.self)
         let json = try String(data: JSONEncoder().encode(data), encoding: .utf8)
         
         XCTAssertEqual(json, "{\"key\":\"value\"}")
@@ -37,7 +37,7 @@ final class FailableTests: XCTestCase {
             "key": "value"
         }
         """.data(using: .utf8)!
-        let object = try JSONDecoder().decode(Failable<[String: String], EmptyValidation<[String: String]>>.self, from: json)
+        let object = try JSONDecoder().decode(NonFailable<[String: String]>.self, from: json)
         
         XCTAssertEqual(object.value, ["key": "value"])
     }

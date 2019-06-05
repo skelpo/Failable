@@ -5,24 +5,28 @@ typealias OptionalStringLength = NotNilValidate<LengthRange10To1028<String>>
 
 final class OptionalTests: XCTestCase {
     func testNotNil()throws {
-        var optional = try Failable<Bool?, NotNil<Bool>>.init(false)
+        var optional: Failable<Bool?, NotNil<Bool>> = false
         
-        try optional <~ true
-        try optional <~ false
+        optional <~ true
+        optional <~ false
+        try XCTAssertNoThrow(optional.get())
         
-        try XCTAssertThrowsError(optional <~ nil)
+        optional <~ nil
+        try XCTAssertThrowsError(optional.get())
     }
     
     func testNotNilValidate()throws {
-        var optional = try Failable<String?, OptionalStringLength>.init("Hello World")
+        var optional: Failable<String?, OptionalStringLength> = "Hello World"
         
-        try optional <~ "Long long ago"
-        try optional <~ String(repeating: "x", count: 10)
-        try optional <~ String(repeating: "x", count: 1028)
-        try optional <~ nil
+        optional <~ "Long long ago"
+        optional <~ String(repeating: "x", count: 10)
+        optional <~ String(repeating: "x", count: 1028)
+        optional <~ nil
+        try XCTAssertNoThrow(optional.get())
         
-        try XCTAssertThrowsError(optional <~ String(repeating: "x", count: 9))
-        try XCTAssertThrowsError(optional <~ String(repeating: "x", count: 1029))
+        optional <~ String(repeating: "x", count: 9)
+        optional <~ String(repeating: "x", count: 1029)
+        try XCTAssertThrowsError(optional.get())
     }
 }
 
