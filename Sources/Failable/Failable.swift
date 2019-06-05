@@ -87,6 +87,15 @@ public struct Failable<T, Validations> where Validations: Validation, Validation
         })
     }
 
+    /// Creates a new `Failable` instance.
+    ///
+    /// - Parameters:
+    ///   - t: The initial value for the instance.
+    ///   - validation: The validation type for the instance.
+    public init(_ t: T, _ validation: Validations.Type) {
+        self.init(t)
+    }
+
     /// Initialize a new `Failable` instance from an already existing instance.
     /// This can be useful to specify the types of an ambiguous `Failable` instance.
     ///
