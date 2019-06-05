@@ -94,6 +94,14 @@ public struct Failable<T, Validations> where Validations: Validation, Validation
         self = failable
     }
 
+    /// Gets the value stored in the current instance.
+    ///
+    /// - Returns: The stored value, of type `T`.
+    /// - Throws: The error stored in the current value.
+    public func get()throws -> T {
+        return try self.stored.get()
+    }
+
     /// Verified that the current instance contains a value instead of an error.
     /// If an error is found, it will be thrown.
     ///
