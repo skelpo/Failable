@@ -59,7 +59,8 @@ public struct Failable<T, Validations> where Validations: Validation, Validation
             return value
         }
         set {
-            guard !_isOptional(T.self), let value = newValue else { return }
+            if newValue == nil, !_isOptional(T.self) { return }
+            guard let value = newValue else { return }
             self.stored = Result(catching: {
                 try Validations.run(value)
                 return value
