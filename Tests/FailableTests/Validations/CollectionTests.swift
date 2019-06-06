@@ -13,36 +13,34 @@ internal struct Length1028<C>: LengthValidation where C: Collection {
     
     static var maxLength: Int { return 1028 }
 }
-internal typealias StringLengthArray = ElementValidation<[String], Length1028<String>>
+
+fileprivate struct Lists {
+    @Validated<[Bool], LengthRange10To1028<[Bool]>> var bools: [Bool]
+    @Validated<[String], ElementValidation<[String], Length1028<String>>> var strings: [String]
+}
 
 final class CollectionTests: XCTestCase {
     func testLengthValidation()throws {
-        try XCTAssertThrowsError(Failable([], LengthRange10To1028<[Bool]>.self).get())
+        var lists = Lists(bools: [], strings: [])
+        _ = try lists.$bools.get()
+
+        try lists.$bools.test([true, true, true, false, false, false, true, true, false, false])
+        try lists.$bools.test(Array(repeating: true, count: 1028))
         
-        var bools = Failable([true, true, true, false, false, false, true, true, false, false], LengthRange10To1028<[Bool]>.self)
-        XCTAssertEqual(bools.value, [true, true, true, false, false, false, true, true, false, false])
-        
-        bools <~ Array(repeating: true, count: 5)
-        bools <~ Array(repeating: false, count: 5)
-        bools <~ Array(repeating: true, count: 1029)
-        bools <~ Array(repeating: false, count: 1029)
-        try XCTAssertThrowsError(bools.get())
-        
-        let array = Array(repeating: true, count: 1028)
-        bools <~ array
-        XCTAssertEqual(bools.value, array)
+        try XCTAssertThrowsError(lists.$bools.test(Array(repeating: true, count: 5)))
+        try XCTAssertThrowsError(lists.$bools.test(Array(repeating: false, count: 5)))
+        try XCTAssertThrowsError(lists.$bools.test(Array(repeating: true, count: 1029)))
+        try XCTAssertThrowsError(lists.$bools.test(Array(repeating: false, count: 1029)))
     }
     
     func testElementValidation()throws {
-        let tooLong = String(repeating: "x", count: 1029)
-        let longest = String(repeating: "g", count: 1028)
-        var strings = Failable<[String], StringLengthArray>(["G", "D", "A", "E"])
-        XCTAssertEqual(strings.value, ["G", "D", "A", "E"])
-        
-        strings <~ ["G", "O", "O", tooLong]
-        try XCTAssertThrowsError(strings.get())
+        var lists = Lists(bools: [], strings: ["G", "D", "A", "E"])
+        _ = try lists.$strings.get()
 
-        strings <~ ["G", "OOOO", "World", longest]
-        XCTAssertEqual(strings.value, ["G", "OOOO", "World", longest])
+        let longest = String(repeating: "g", count: 1028)
+        try lists.$strings.test(["G", "OOOO", "World", longest])
+
+        let tooLong = String(repeating: "x", count: 1029)
+        try lists.$strings.test(["G", "O", "O", tooLong])
     }
 }

@@ -1,6 +1,6 @@
-extension Failable: Sequence where T: Sequence {
+extension Validated: Sequence where T: Sequence {
     /// See [`Sequence.Element`](https://developer.apple.com/documentation/swift/sequence/2908099-element).
-    public typealias Element = Failable<T.Element, EmptyValidation<T.Element>>
+    public typealias Element = AlwaysValidated<T.Element>
 
     /// See [`IteratorProtocol`](https://developer.apple.com/documentation/swift/iteratorprotocol).
     ///
@@ -9,7 +9,7 @@ extension Failable: Sequence where T: Sequence {
     public struct Iterator: IteratorProtocol {
 
         /// See [`IteratorProtocol.Element`](https://developer.apple.com/documentation/swift/iteratorprotocol/1641632-element).
-        public typealias Element = Failable.Element
+        public typealias Element = Validated.Element
 
         var internalIterator: AnyIterator<T.Element>?
 
@@ -20,7 +20,7 @@ extension Failable: Sequence where T: Sequence {
         /// See [`IteratorProtocol.next()`](https://developer.apple.com/documentation/swift/iteratorprotocol/1641682-next).
         public mutating func next() -> Element? {
             if self.internalIterator != nil {
-                return (self.internalIterator?.next()).map(Element.init(_:))
+                return (self.internalIterator?.next()).map(Element.init(initialValue:))
             } else {
                 return nil
             }
@@ -39,9 +39,9 @@ extension Failable: Sequence where T: Sequence {
     }
 }
 
-extension Failable: Collection where T: Collection {
+extension Validated: Collection where T: Collection {
     /// See [`Collection.Index`](https://developer.apple.com/documentation/swift/collection/2943866-index).
-    public typealias Index = Failable<T.Index, EmptyValidation<T.Index>>
+    public typealias Index = AlwaysValidated<T.Index>
 
     /// See [`Collection.startIndex`](https://developer.apple.com/documentation/swift/collection/2946080-startindex).
     public var startIndex: Index {
@@ -49,37 +49,37 @@ extension Failable: Collection where T: Collection {
     }
 
     /// See [`Collection.endIndex`](https://developer.apple.com/documentation/swift/collection/2944204-endindex).
-    public var endIndex: Failable<T.Index, EmptyValidation<T.Index>> {
+    public var endIndex: Index {
         return self[keyPath: \.endIndex]
     }
 
     /// See [`Collection.subscript(_:)`](https://developer.apple.com/documentation/swift/collection/1641358-subscript).
     public subscript (position: Index) -> Element {
         get {
-            return Failable.map(self, position) { collection, index in collection[index] }
+            return Validated.map(self, position) { collection, index in collection[index] }
         }
     }
 
     /// See [`Collection.index(after:)`](https://developer.apple.com/documentation/swift/collection/2943746-index).
-    public func index(after i: Failable<T.Index, EmptyValidation<T.Index>>) -> Failable<T.Index, EmptyValidation<T.Index>> {
-        return Failable.map(self, i) { collection, index in collection.index(after: index) }
+    public func index(after i: Index) -> Index {
+        return Validated.map(self, i) { collection, index in collection.index(after: index) }
     }
 }
 
-extension Failable: BidirectionalCollection where T: BidirectionalCollection {
+extension Validated: BidirectionalCollection where T: BidirectionalCollection {
     /// See [`BidirectionalCollection.index(before:)`](https://developer.apple.com/documentation/swift/bidirectionalcollection/3017603-formindex).
-    public func index(before i: Failable<T.Index, EmptyValidation<T.Index>>) -> Failable<T.Index, EmptyValidation<T.Index>> {
-        return Failable.map(self, i) { collection, index in collection.index(before: index) }
+    public func index(before i: Index) -> Index {
+        return Validated.map(self, i) { collection, index in collection.index(before: index) }
     }
 }
 
-extension Failable: RandomAccessCollection where T: RandomAccessCollection { }
+extension Validated: RandomAccessCollection where T: RandomAccessCollection { }
 
-extension Failable: MutableCollection where T: MutableCollection {
+extension Validated: MutableCollection where T: MutableCollection {
     /// See [`MutableCollection.subscript(_:)`](https://developer.apple.com/documentation/swift/mutablecollection/1640969-subscript).
     public subscript (position: Index) -> Element {
         get {
-            return Failable.map(self, position) { collection, index in collection[index] }
+            return Validated.map(self, position) { collection, index in collection[index] }
         }
         set {
             if let value = newValue.value, let index = position.value {
@@ -89,9 +89,9 @@ extension Failable: MutableCollection where T: MutableCollection {
     }
 }
 
-extension Failable: RangeReplaceableCollection where T: RangeReplaceableCollection {
+extension Validated: RangeReplaceableCollection where T: RangeReplaceableCollection {
     /// See [`RangeReplaceableCollection.init()`](https://developer.apple.com/documentation/swift/rangereplaceablecollection/1641467-init).
     public init() {
-        self = Failable(T())
+        self = Validated(initialValue: T())
     }
 }

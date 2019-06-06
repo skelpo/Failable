@@ -20,44 +20,46 @@ internal struct LessThan: InRangeValidation {
     static let max: Int? = 9_999
 }
 
+fileprivate struct Numbers {
+    @Validated<Int, NumberThousand> var thousands: Int
+    @Validated<Int, GreaterThan> var large: Int
+    @Validated<Int, LessThan> var small: Int
+}
+
 final class ComparableTests: XCTestCase {
     func testNumberThousand()throws {
-        var int = Failable<Int, NumberThousand>(5_000)
+        var numbers = Numbers(thousands: 5_000, large: 0, small: 0)
+        _ = try numbers.$thousands.get()
+
+        try numbers.$thousands.test(9_999)
+        try numbers.$thousands.test(1_000)
         
-        int <~ 9_999
-        int <~ 1_000
-        try XCTAssertNoThrow(int.get())
-        
-        int <~ 999
-        int <~ 10_000
-        try XCTAssertThrowsError(int.get())
+        try XCTAssertThrowsError(numbers.$thousands.test(999))
+        try XCTAssertThrowsError(numbers.$thousands.test(10_000))
     }
     
     func testGreaterThan()throws {
-        var int = Failable<Int, GreaterThan>(5_000)
+        var numbers = Numbers(thousands: 0, large: 5_000, small: 0)
         
-        int <~ 1_000
-        int <~ 10_000
-        int <~ Int.max
-        try XCTAssertNoThrow(int.get())
+        try numbers.$large.test(1_000)
+        try numbers.$large.test(10_000)
+        try numbers.$large.test(Int.max)
         
-        int <~ 999
-        int <~ 0
-        int <~ Int.min
-        try XCTAssertThrowsError(int.get())
+        try XCTAssertThrowsError(numbers.$large.test(999))
+        try XCTAssertThrowsError(numbers.$large.test(0))
+        try XCTAssertThrowsError(numbers.$large.test(Int.min))
     }
     
     func testLessThan()throws {
-        var int = Failable<Int, LessThan>(5_000)
+        var numbers = Numbers(thousands: 0, large: 0, small: 5_000)
+        _ = try numbers.$small.get()
         
-        int <~ 9_999
-        int <~ 999
-        int <~ 0
-        int <~ Int.min
-        try XCTAssertNoThrow(int.get())
+        try numbers.$small.test(9_999)
+        try numbers.$small.test(999)
+        try numbers.$small.test(0)
+        try numbers.$small.test(Int.min)
         
-        int <~ 10_000
-        int <~ Int.max
-        try XCTAssertThrowsError(int.get())
+        try XCTAssertThrowsError(numbers.$small.test(10_000))
+        try XCTAssertThrowsError(numbers.$small.test(Int.max))
     }
 }

@@ -1,1 +1,1 @@
-extension Failable: Error where T: Error {}
+extension Validated: Error where T: Error {}

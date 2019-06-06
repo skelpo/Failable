@@ -1,25 +1,30 @@
-extension Failable: Equatable where T: Equatable {
+extension Validated: Equatable where T: Equatable {
     /// See [`Equatable.==(_:_:)`](https://developer.apple.com/documentation/swift/equatable/1539854).
-    public static func == (lhs: Failable<T, Validations>, rhs: Failable<T, Validations>) -> Bool {
-        switch (lhs.stored, rhs.stored) {
-        case let (.success(left), .success(right)): return left == right
-        case let (.failure(left), .failure(right)): return left.localizedDescription == right.localizedDescription
+    public static func == (lhs: Validated<T, Validations>, rhs: Validated<T, Validations>) -> Bool {
+        switch (lhs, rhs) {
+        case let (.value(left), .value(right)): return left == right
+        case let (.error(left), .error(right)): return left.localizedDescription == right.localizedDescription
         default: return false
         }
     }
 }
 
-extension Failable: Comparable where T: Comparable {
+extension Validated: Comparable where T: Comparable {
     /// See [`Comparable.<(_:_:)`](https://developer.apple.com/documentation/swift/comparable/1538311).
-    public static func < (lhs: Failable<T, Validations>, rhs: Failable<T, Validations>) -> Bool {
-        return Failable<Bool, EmptyValidation<Bool>>(Failable.map(lhs, rhs) { left, right in left < right }).value ?? false
+    public static func < (lhs: Validated<T, Validations>, rhs: Validated<T, Validations>) -> Bool {
+        switch (lhs, rhs) {
+        case let (.value(left), .value(right)): return left < right
+        default: return false
+        }
     }
 }
 
-extension Failable: Hashable where T: Hashable {
+extension Validated: Hashable where T: Hashable {
     /// See [`Hashable.hash(into:)`](https://developer.apple.com/documentation/swift/hashable/2995575-hash).
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(String(describing: Validations.self))
-        hasher.combine(self.value)
+        switch self {
+        case let .value(value): hasher.combine(value)
+        case let .error(error): hasher.combine(error.localizedDescription)
+        }
     }
 }

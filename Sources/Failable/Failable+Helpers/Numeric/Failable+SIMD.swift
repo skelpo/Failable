@@ -1,6 +1,6 @@
-extension Failable: SIMDStorage where T: SIMDStorage {
+extension Validated: SIMDStorage where T: SIMDStorage {
     /// See [`SIMDStorage.Scalar`](https://developer.apple.com/documentation/swift/simdstorage/3140578-scalar)
-    public typealias Scalar = Failable<T.Scalar, EmptyValidation<T.Scalar>>
+    public typealias Scalar = AlwaysValidated<T.Scalar>
 
     /// See [`SIMDStorage.scalarCount`](https://developer.apple.com/documentation/swift/simdstorage/3140580-scalarcount)
     public var scalarCount: Int {
@@ -9,7 +9,7 @@ extension Failable: SIMDStorage where T: SIMDStorage {
 
     /// See [`SIMDStorage.init()`](https://developer.apple.com/documentation/swift/simdstorage/3140579-init).
     public init() {
-        self = Failable(T())
+        self = Validated(initialValue: T())
     }
 
     /// See [`subscript(_:)`](https://developer.apple.com/documentation/swift/simdstorage/3140581-subscript).
@@ -25,7 +25,7 @@ extension Failable: SIMDStorage where T: SIMDStorage {
     }
 }
 
-extension Failable: SIMD where T: SIMD {
+extension Validated: SIMD where T: SIMD {
     /// See [`SIMD.MaskStorage`](https://developer.apple.com/documentation/swift/simd/3139486-maskstorage).
     public typealias MaskStorage = T.MaskStorage
 }
